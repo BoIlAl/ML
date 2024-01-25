@@ -53,16 +53,16 @@ if __name__ == '__main__':
     # df.to_excel(dataset_xlsx_path)
     # df.to_json(dataset_json_path)
     
-    df = to_one_param_task(pd.read_json('dataset/dataset.json'))
-    dvp.train(df)
+    # df = to_one_param_task(pd.read_json('dataset/dataset.json'))
+    # dvp.train(df)
 
-    #df = df.iloc[[6885]]
-    #print(machine_learning.get_answer(df.drop('results', axis=1)))
+    # df = df.iloc[[6885]]
+    # print(machine_learning.get_answer(df.drop('results', axis=1)))
 
-    # hp = Human_params(23, Gender.male, 177, 60, 2, Goal.mildgain)
+    hp = Human_params(23, Gender.male, 177, 60, 2, Goal.weightgain)
 
-    # tr = TextRecognizer()
-    # pi = tr.extract_product_info(f'dataset/img19.jpg')
+    tr = TextRecognizer()
+    pi = tr.extract_product_info(f'dataset/img17.jpg')
 
-    # task = hp.get_df().assign(**pi)
-    # print(dvp.get_answer(task))
+    task = hp.get_df().assign(**pi)
+    print(dvp.get_answer(task))

@@ -107,9 +107,9 @@ class DataGenerator:
                 products_carbs = [0] * len(product_df)
 
                 for k in j:
-                    products_protein[k] = product_df["protein"][k]
-                    products_fat[k] = product_df["fat"][k]
-                    products_carbs[k] = product_df["carbs"][k]
+                    products_protein[k] = random.uniform(0.1, 30)
+                    products_fat[k] = random.uniform(0.1, 30)
+                    products_carbs[k] = random.uniform(0.1, 30)
 
 
                 row.insert(len(row.columns), "products_protein", [products_protein], True)

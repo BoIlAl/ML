@@ -35,7 +35,20 @@ class TextRecognizer:
 
         return self._contain_key_word(text)
 
+    @staticmethod
+    def _get_from_math(_match):
+        s = _match[0].replace('—',' ')
+        s = s.replace('-', ' ')
+        found = s.split(' ')
 
+        fff = [fs for fs in found if len(fs) > 0]
+        if (len(fff) < 2):
+            return None
+        fff[1] = fff[1].replace(',', '.')
+
+        if is_float(fff[1]):
+            return float(fff[1])
+    
     def _contain_key_word(self, text: str):
         new_str = ' ' + text.replace('\n', ' ') + ' '
         key_words = []
@@ -46,26 +59,12 @@ class TextRecognizer:
             'products_carbs' : 0.0
         }
 
-        def get_from_math(_match):
-            s = _match[0].replace('—',' ')
-            s = s.replace('-', ' ')
-            found = s.split(' ')
-
-            fff = [fs for fs in found if len(fs) > 0]
-            if (len(fff) < 2):
-                return None
-            fff[1] = fff[1].replace(',', '.')
-
-            if is_float(fff[1]):
-                return float(fff[1])
-
-
         if re.search(r'\bжир[ыао]в?\b', new_str, re.IGNORECASE):
             key_words.append('жиры')
 
             match = re.search(r'жир[ыао]в?\s?[—-]?\s?[0123456789]+[,.\s]?[0123456789]+\s?[г]?', new_str, re.IGNORECASE)
             if match:
-                product_info['products_fat'] = get_from_math(match)
+                product_info['products_fat'] = TextRecognizer._get_from_math(match)
 
 
         if re.search(r'\bуглевод[ыо]в?\b', new_str, re.IGNORECASE):
@@ -73,7 +72,7 @@ class TextRecognizer:
 
             match = re.search(r'углевод[ыо]в?\s?[—-]?\s?[0123456789]+[,.\s]?[0123456789]+\s?[г]?', new_str, re.IGNORECASE)
             if match:
-                product_info['products_carbs'] = get_from_math(match)
+                product_info['products_carbs'] = TextRecognizer._get_from_math(match)
             
         
         if re.search(r'\bбелк[аио]в?\b', new_str, re.IGNORECASE):
@@ -81,6 +80,6 @@ class TextRecognizer:
 
             match = re.search(r'белк[аио]в?\s?[—-]?\s?[0123456789]+[,.\s]?[0123456789]+\s?[г]?', new_str, re.IGNORECASE)
             if match:
-                product_info['products_protein'] = get_from_math(match)
+                product_info['products_protein'] = TextRecognizer._get_from_math(match)
         
         return product_info
